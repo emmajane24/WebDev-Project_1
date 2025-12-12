@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Emma Tolman – Resume</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Source+Sans+Pro:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #1f2e45;
+            --cream-bg: #f7f3ec;
+            --cream-card: #fffaf6;
+            --accent1: #9c4a60;
+            --accent2: #c27b8e;
+            --accent3: #e9d8cf;
+            --text-dark: #1f2e45;
+            --muted: #6b7280;
+            --border-light: rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --shadow: 0 18px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* BACKGROUND */
+        body {
+            background: var(--cream-bg);
+            font-family: "Source Sans Pro", sans-serif;
+            color: var(--text-dark);
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* PAGE GRID */
+        .page {
+            width: 100%;
+            max-width: 1300px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 32px;
+        }
+
+        /* FIXED SIDEBAR */
+        .sidebar {
+            position: sticky;
+            top: 24px;
+            height: fit-content;
+            background: var(--navy);
+            padding: 26px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            color: var(--cream-card);
+        }
+
+        .sidebar h3 {
+            font-family: "Playfair Display";
+            font-size: 1.1rem;
+            letter-spacing: 0.08em;
+            margin-bottom: 10px;
+            color: var(--accent3);
+        }
+
+        .sidebar-section {
+            margin-bottom: 28px;
+        }
+
+        .sidebar-section ul {
+            margin-left: 18px;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .chip {
+            background: var(--accent2);
+            color: var(--cream-card);
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin: 4px 6px 0 0;
+        }
+
+        /* HEADER */
+        .header {
+            background: var(--cream-card);
+            padding: 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 22px;
+        }
+
+        .name {
+            font-family: "Playfair Display";
+            font-size: 2.5rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-dark);
+        }
+
+        .tagline {
+            margin-top: 6px;
+            font-size: 1rem;
+            color: var(--accent1);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .header-pills {
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            border: 1px solid var(--accent2);
+            padding: 6px 12px;
+            border-radius: 999px;
+            color: var(--accent1);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            margin-top: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: var(--accent1);
+            color: var(--cream-card);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: 0.2s;
+        }
+
+        .nav a:hover {
+            background: var(--accent2);
+        }
+
+        /* CONTENT CARDS */
+        .card {
+            background: var(--cream-card);
+            padding: 26px;
+            border-radius: var(--radius);
+            margin-bottom: 22px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-family: "Playfair Display";
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            color: var(--accent1);
+            letter-spacing: 0.1em;
+            margin-bottom: 14px;
+        }
+
+        /* ENTRIES */
+        .entry {
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.16);
+        }
+
+        .entry-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .entry-sub {
+            color: var(--accent1);
+            font-size: 0.9rem;
+        }
+
+        .entry-meta {
+            color: var(--muted);
+            font-size: 0.8rem;
+            margin-top: 2px;
+        }
+
+        .entry-details ul {
+            margin-left: 20px;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        /* WRITING SAMPLE */
+        details {
+            background: var(--cream-card);
+            border-radius: var(--radius);
+            padding: 18px;
+            border: 1px solid var(--accent3);
+        }
+
+        details summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--accent1);
+            font-size: 1rem;
+        }
+
+        details summary:hover {
+            color: var(--accent2);
+        }
+
+        details h4 {
+            margin-top: 14px;
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        details p {
+            margin-top: 10px;
+            line-height: 1.55;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 24px;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="sidebar-section">
+                <h3>Contact</h3>
+                <p>Email: emmatolman04@gmail.com</p>
+                <p>Phone: 403-894-5957</p>
+                <p>Provo, UT</p>
+                <p>
+                    <a href="https://www.linkedin.com/in/emma-tolman-bb45222b9/" style="color:var(--accent3)"
+                        target="_blank" rel="noopener noreferrer">
+                        LinkedIn
+                    </a>
+                </p>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Education</h3>
+                <p>Brigham Young University</p>
+                <p>B.A., Political Science: International Strategy & Diplomacy</p>
+                <p>Minor: Global Women’s Studies</p>
+                <p>GPA: 3.81</p>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Strengths</h3>
+                <ul>
+                    <li>Analytical research</li>
+                    <li>Statistical reasoning</li>
+                    <li>Policy communication</li>
+                    <li>Cross-cultural mentoring</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Technical Skills</h3>
+                <ul>
+                    <li>R (Fluent)</li>
+                    <li>Data management & cleaning</li>
+                    <li>Data visualization</li>
+                    <li>HTML & CSS (Basic)
+                    <li>SQL (Basic)</li>
+                    <li>VBA (Basic)</li>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Languages</h3>
+                <ul>
+                    <li>English — Native</li>
+                    <li>French — Professional</li>
+                    <li>German — Basic</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Clubs & Memberships</h3>
+                <ul>
+                    <li>Board — Global Women’s Studies Honor Society</li>
+                    <li>Board + Social Media Manager — Peacemaker Project</li>
+                    <li>Member — BYU Democrats</li>
+                    <li>Member — Political Affairs Society</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Interests</h3>
+                <span class="chip">Women, Peace & Security</span>
+                <span class="chip">Human Rights</span>
+                <span class="chip">Foreign Policy</span>
+                <span class="chip">Conflict Studies</span>
+            </div>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main>
+
+            <!-- HEADER -->
+            <section class="header">
+                <h1 class="name">Emma Tolman</h1>
+                <div class="tagline">Political Science & Global Women’s Studies</div>
+
+                <div class="header-pills">
+                    <span class="pill">International Strategy</span>
+                    <span class="pill">Research & Data</span>
+                    <span class="pill">Women, Peace & Security</span>
+                </div>
+
+                <nav class="nav">
+                    <a href="#profile">Profile</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#research">Research</a>
+                    <a href="#leadership">Leadership</a>
+                    <a href="#service">Service</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#writing">Writing</a>
+                </nav>
+            </section>
+
+            <!-- PROFILE -->
+            <section class="card" id="profile">
+                <h2 class="section-title">Profile</h2>
+                <p>
+                    I’m a political science student drawn to questions of strategy, conflict, and women’s
+                    rights—especially the moments where data and human experience intersect. My work as a researcher,
+                    TA, and international intern in Berlin has helped me build strong analytical and communication
+                    skills, but just as importantly, it has taught me how much I value clarity, empathy, and thoughtful
+                    problem-solving. I enjoy work that blends rigorous research with real-world impact.
+                </p>
+            </section>
+
+            <!-- EXPERIENCE -->
+            <section class="card" id="experience">
+                <h2 class="section-title">Experience</h2>
+
+                <div class="entry">
+                    <div class="entry-title">International Student Services — Eurasia Institute</div>
+                    <div class="entry-sub">Berlin, Germany</div>
+                    <div class="entry-meta">Summer 2025</div>
+                    <ul>
+                        <li>Assisted students navigating Germany’s Ausbildung visa pathways.</li>
+                        <li>Created guides explaining blocked accounts, insurance rules, and application timelines.</li>
+                        <li>Supported diverse students through the onboarding and transition process.</li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-title">Research Assistant — Faculty Appointment</div>
+                    <div class="entry-sub">Brigham Young University</div>
+                    <div class="entry-meta">2025–Present</div>
+                    <ul>
+                        <li>Collected, cleaned, and structured conflict datasets to support faculty-led research.</li>
+                        <li>Ran statistical models and built data visualizations using R.</li>
+                        <li>Performed dataset cleaning, documentation, and replication tasks.</li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-title">Teaching Assistant — Political Statistics</div>
+                    <div class="entry-sub">Brigham Young University</div>
+                    <div class="entry-meta">2025–Present</div>
+                    <ul>
+                        <li>Taught weekly labs on R programming, regression, and inference.</li>
+                        <li>Developed coding examples, walkthroughs, and visualizations.</li>
+                        <li>Provided analytical guidance and individualized support on quantitative assignments.</li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-title">Teaching Assistant — American Politics</div>
+                    <div class="entry-sub">Brigham Young University</div>
+                    <div class="entry-meta">2024–2025</div>
+                    <ul>
+                        <li>Led discussion-based learning supporting foundational political concepts.</li>
+                        <li>Graded assignments and assisted in preparing review materials.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- RESEARCH -->
+            <section class="card" id="research">
+                <h2 class="section-title">Research</h2>
+
+                <div class="entry">
+                    <div class="entry-title">Framing the Fight: How Leaders’ Justificatory Rhetoric Predicts the Length
+                        of Military Engagements</div>
+                    <div class="entry-sub">Global Politics Lab — Forthcoming Publication</div>
+                    <div class="entry-meta">2024–Present</div>
+                    <ul>
+                        <li>Analyzed how leaders’ rhetoric shapes public expectations and conflict duration.</li>
+                        <li>Conducted manual data coding and textual analysis of presidential speeches.</li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-title">Women’s Rights in Central Asia</div>
+                    <div class="entry-sub">Mentored Research Project</div>
+                    <div class="entry-meta">2024–Present</div>
+                    <ul>
+                        <li>Examined state policies shaping women’s rights protections and limitations.</li>
+                        <li>Contributed to comparative case studies and literature synthesis.</li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <!-- LEADERSHIP -->
+            <section class="card" id="leadership">
+                <h2 class="section-title">Leadership</h2>
+
+                <div class="entry">
+                    <div class="entry-title">President — Local Women’s Organization</div>
+                    <div class="entry-sub">The Church of Jesus Christ of Latter-day Saints</div>
+                    <div class="entry-meta">2023-2024</div>
+                    <ul>
+                        <li>Organized community events supporting women’s development and well-being.</li>
+                        <li>Led committees and coordinated volunteer initiatives.</li>
+                        <li>Provided mentorship, support, and outreach within the organization.</li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <!-- SERVICE -->
+            <section class="card" id="service">
+                <h2 class="section-title">Service & Engagement</h2>
+
+                <div class="entry">
+                    <div class="entry-title">Volunteer — The Refuge Utah</div>
+                    <div class="entry-meta">2025-Present</div>
+                    <ul>
+                        <li>Assisted survivors of trauma and abuse through a trauma-informed nonprofit.</li>
+                        <li>Supported client needs and contributed to service programming.</li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-title">Volunteer — Mothers Without Borders</div>
+                    <div class="entry-meta">2024-2025</div>
+                    <ul>
+                        <li>Supported humanitarian programs serving vulnerable children.</li>
+                        <li>Engaged in community outreach and service-oriented projects.</li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <!-- SKILLS -->
+            <section class="card" id="skills">
+                <h2 class="section-title">Skills</h2>
+                <ul>
+                    <li>Fluent in R (statistical modeling, visualization, inference)</li>
+                    <li>Strong policy writing and communication</li>
+                    <li>Cross-cultural collaboration & mentoring</li>
+                </ul>
+            </section>
+
+            <!-- WRITING SAMPLE -->
+            <section class="card" id="writing">
+                <h2 class="section-title">Writing Sample</h2>
+
+                <details>
+                    <summary style="font-size: 1rem; font-weight: 600; color: var(--accent1);">
+                        Expand for full writing sample
+                    </summary>
+                    <h4>To: Acting Assistant Secretary of State for African Affairs - Troy D. Fitrell<br>
+                        From: Policy Advisor<br>
+                        Re: Countering Foreign Interference in Sudan to Advance U.S. Security and Strategic
+                        Interests<br>
+                        Date: 04/11/2025</h4>
+
+                    <h4>Executive Summary</h4>
+                    <p>
+                        The ongoing civil conflict in Sudan presents a unique and serious challenge to US national
+                        interests and regional stability. Intelligence suggests that foreign interference has
+                        exacerbated this conflict, particularly that of entities operating out of the UAE and Russia. It
+                        is in the United States’ strategic interest to impose sanctions on the UAE, Russia, and
+                        affiliated entities for their destabilizing roles in the Sudanese Civil War and the human rights
+                        abuses committed by their proxies. Failure to act will allow these outside actors to deepen
+                        their influence and prevent a diplomatic end to the war.
+                    </p>
+
+                    <h4>Background</h4>
+                    <p>
+                        Sudan is entering its third year embroiled in a deep and devastating civil war between the
+                        Sudanese Armed Forces (SAF) and the Rapid Support Forces (RSF). Stemming from an unsuccessful
+                        transition to civilian rule following the ousting of longtime President Omar al-Bashir in 2019,
+                        tensions gradually escalated into what effectively became a personal power struggle between the
+                        leaders of the Sudanese Armed Forces and the Rapid Support Forces over who would assume control
+                        of the country.
+                    </p>
+
+                    <p>
+                        Currently, parts of the east and north are controlled by SAF, while most of the West—including
+                        the capital city Khartoum—is controlled by the RSF. Recently, the RSF presented a formal bid for
+                        legitimacy by signing a constitution proposing the creation of a breakaway state, while SAF
+                        forces have launched a new offensive, retaking strategic territory around Khartoum.
+                    </p>
+
+                    <p>
+                        What started as internal tension and low-level conflict has escalated into full-scale warfare,
+                        creating a humanitarian crisis unlike many others. The conflict has resulted in the death of an
+                        estimated 150,000 individuals, the displacement of nearly 12.5 million people (both internally
+                        and externally), and created humanitarian needs for roughly 30 million people.
+                    </p>
+
+                    <p>
+                        This volatile situation has left Sudan a fragile state on the brink of collapse, allowing powers
+                        like the UAE, Saudi Arabia, Russia, and Iran to expand their regional influence. Iran, in
+                        particular, has re-engaged with Sudan by supplying drones and military aid to the SAF—a
+                        strategic move consistent with Tehran's broader effort to project power across the Red Sea and
+                        challenge Western-aligned interests in the region. Given Iran’s long-standing opposition to U.S.
+                        strategic goals in the Middle East, its growing involvement in Sudan adds another layer of
+                        complexity to what is increasingly an undeclared proxy war.
+                    </p>
+
+                    <h4>Issue Analysis</h4>
+                    <p>
+                        The first option is for the US to impose targeted sanctions on foreign actors supporting the
+                        conflict, particularly those aiding the RSF, such as the UAE and Russia. This would be an ideal
+                        approach if the administration wishes to undermine their ability to take advantage of the
+                        instability of Sudan. This approach would be a building up of sanctions to freeze the transfer
+                        of assets and block any transactions related to weapons and gold that may be fueling and funding
+                        the RSF. However, it is important to consider the diplomatic consequences of these actions, as
+                        they may strain bilateral relationships with these actors.
+                    </p>
+
+                    <p>
+                        The second option is for the US to increase intelligence sharing with Egypt, which has been a
+                        supporter of the SAF. This strategy would be ideal if the administration wishes to counter
+                        Iran's influence in this conflict and in turn the region. Increased aid to Egypt would give them
+                        increased ability to aid the SAF, making the group more reliant on a US-backed ally instead of a
+                        state with which the US has no formal diplomatic agreement. Additionally, because of Egypt's
+                        strategic interests in the region, help from the US may strengthen relations between the two
+                        countries. However, historically Iran has also had strategic interests in the region, and SAFs'
+                        increased reliance on Egypt may not deter the Iranian government from getting involved.
+                    </p>
+
+                    <p>
+                        The third option is for the US to expand its Naval presence in the Red Sea, especially in and
+                        near the Strait of Bab el-Mandeb. This would be ideal if the administration desires to show
+                        strength without deep involvement. The mere presence of the US Navy would deter arms smuggling
+                        between countries, with arms shipments entering Sudan being the most important to monitor at
+                        this time. This move would disrupt the flow of resources that are fueling the RSF’s war effort.
+                        The main concern with this strategy would be the Houthis—who have a pretty large presence in the
+                        Red Sea—seeing this action as an act of aggression towards them.
+                    </p>
+
+                    <h4>Solutions and Strategic Recommendations</h4>
+                    <p>
+                        The best option moving forward is to impose targeted and rigorous sanctions on those outside
+                        groups—states and non-state—who are backing the RSF. This would include entities in the UAE and
+                        Russia, as well as any networks engaged in arms and gold smuggling or financial transfers.
+                        Because the RSF functions as a paramilitary group that is heavily reliant on the support of
+                        outside institutions, these kind of sanctions would disrupt their ability to operate and send a
+                        clear message that America will not tolerate the manipulation of Sudan, in its weakened state,
+                        by anyone for gain.
+                    </p>
+
+                    <p>
+                        Additionally, it would allow the US to preserve its strength in the region without requiring
+                        American boots on the ground. Many analysts suggest that if the RSF were to stop receiving
+                        external support, the conflict would likely subside, as it is the RSF that engages in more
+                        escalation-related operations.
+                    </p>
+
+                    <p>
+                        Reducing the RSF’s military capacity—without deploying U.S. troops—aligns with U.S. national
+                        security interests, as Sudan’s instability creates a power vacuum that could be exploited by
+                        anti-American groups. Sudan has previously been a hotbed of anti-American sentiment and
+                        propaganda, being listed as a state sponsor of terror for more than 25 years for groups such as
+                        al-Qaeda, even at the time of the September 11th attacks.
+                    </p>
+
+                    <p>
+                        It is the RSF that has been primarily responsible for the human rights violations committed
+                        throughout this conflict, further making actions against them not only an issue of national
+                        security but a moral imperative. It is important to consider the relationship with Russia
+                        through this process, as they and the US have a more volatile history. Framing the sanctions as
+                        not being anti-Russia but as part of an established US commitment to curbing transnational
+                        criminal activity.
+                    </p>
+
+                    <p>
+                        By leveraging tools such as the Global Magnitsky Act and CAATSA, the U.S. can act decisively
+                        without escalating broader geopolitical tensions. Additionally, sanctions on UAE-linked actors
+                        should be strategically targeted to minimize broader economic fallout, while diplomatic
+                        backchannels should be leveraged to reinforce shared interests.
+                    </p>
+
+                    <p>
+                        US inaction will enable ongoing human rights violations to persist and likely intensify, while
+                        also paving the way for greater authoritarian influence in the region and further
+                        destabilization of the Red Sea region. The US cannot afford to take a neutral or passive stance
+                        in a conflict that increasingly poses concerns for US national interests.
+                    </p>
+
+                </details>
+
+            </section>
+
+            <footer>
+                Open to research, policy, and human-rights–focused opportunities.
+            </footer>
+
+        </main>
+    </div>
+
+</body>
+
+</html>

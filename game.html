@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Flag Guessing Game – Typing Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts to match your resume site -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #1f2e45;
+      --cream-bg: #f7f3ec;
+      --cream-card: #fffaf6;
+      --accent1: #9c4a60;
+      --accent2: #c27b8e;
+      --accent3: #e9d8cf;
+      --text-dark: #1f2e45;
+      --muted: #6b7280;
+      --border-light: rgba(0, 0, 0, 0.08);
+      --radius: 16px;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--cream-bg);
+      font-family: "Source Sans Pro", sans-serif;
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .header {
+      background: var(--cream-card);
+      padding: 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      border: 3px solid var(--navy);
+    }
+
+    .title {
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dark);
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      color: var(--accent1);
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 1px solid var(--accent2);
+      padding: 5px 12px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent1);
+    }
+
+    .card {
+      background: var(--cream-card);
+      padding: 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+       border: 3px solid var(--navy);
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent1);
+      margin-bottom: 12px;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .info-pill {
+      background: var(--accent3);
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+
+    .timer-pill {
+      background: var(--accent1);
+      color: var(--cream-card);
+    }
+
+    .flag-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .flag-emoji {
+      font-size: 5rem;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.12));
+    }
+
+    .flag-caption {
+      margin-left: 16px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 280px;
+    }
+
+    @media (max-width: 700px) {
+      .flag-display {
+        flex-direction: column;
+      }
+      .flag-caption {
+        margin-left: 0;
+        margin-top: 8px;
+        text-align: center;
+      }
+    }
+
+    .question-text {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .input-row input[type="text"] {
+      flex: 1 1 200px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--accent2);
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .input-row input[type="text"]:focus {
+      border-color: var(--accent1);
+      box-shadow: 0 0 0 2px rgba(156, 74, 96, 0.15);
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: none;
+      cursor: pointer;
+      transition: 0.15s;
+      white-space: nowrap;
+    }
+
+    .primary-btn {
+      background: var(--accent1);
+      color: var(--cream-card);
+    }
+
+    .primary-btn:hover {
+      background: var(--accent2);
+    }
+
+    .secondary-btn {
+      background: transparent;
+      color: var(--accent1);
+      border: 1px solid var(--accent2);
+    }
+
+    .secondary-btn:hover {
+      background: var(--accent3);
+    }
+
+    .message {
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .message.correct {
+      color: #2f7b3b;
+    }
+
+    .message.wrong {
+      color: #b53939;
+    }
+
+    .game-over {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .recap-card h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent1);
+      margin-bottom: 10px;
+    }
+
+    .recap-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .recap-list {
+      list-style: none;
+      font-size: 0.9rem;
+      padding-left: 0;
+    }
+
+    .recap-list li {
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed rgba(0,0,0,0.12);
+    }
+
+    .recap-list strong {
+      color: var(--text-dark);
+    }
+
+    .footer {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .disabled {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="title">Flag Guessing Game</div>
+      <div class="subtitle">How many flags do you know?</div>
+      <p class="tagline">
+        A one-minute geography and politics challenge: identify the country by its flag, and then review political facts for each state you encountered.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Political Geography</span>
+        <span class="pill">International Relations</span>
+        <span class="pill">Lots of Fun</span>
+      </div>
+    </header>
+
+    <!-- GAME CARD -->
+    <section class="card">
+      <h2 class="section-title">Can You Name the State Behind the Flag?</h2>
+
+      <div class="top-bar">
+        <span class="info-pill timer-pill" id="timerDisplay">Time: 60s</span>
+        <span class="info-pill" id="scoreDisplay">Score: 0</span>
+        <span class="info-pill" id="questionDisplay">Questions: 0</span>
+        <span class="info-pill" id="streakDisplay">Streak: 0</span>
+      </div>
+
+      <div class="flag-display">
+        <div id="flagEmoji" class="flag-emoji">🏳️</div>
+        <div class="flag-caption" id="flagCaption">
+          Press “Start” to begin. A flag will appear—type the country name and submit before time runs out.
+        </div>
+      </div>
+
+      <p class="question-text">
+        Type the name of the country whose flag is shown:
+      </p>
+
+      <form id="guessForm">
+        <div class="input-row">
+          <input type="text" id="guessInput" placeholder="e.g., Canada, France, Brazil" autocomplete="off" />
+          <button type="submit" class="primary-btn" id="submitBtn">Submit</button>
+          <button type="button" class="secondary-btn" id="startBtn">Start / Restart</button>
+        </div>
+      </form>
+
+      <div id="feedbackMessage" class="message"></div>
+      <div id="gameOverMessage" class="game-over" style="display:none;"></div>
+
+      <div class="footer">
+        Built as a mini web app using HTML, CSS, and JavaScript.
+      </div>
+    </section>
+
+    <!-- RECAP CARD -->
+    <section class="card recap-card" id="recapCard" style="display:none;">
+      <h3>Political Fact Recap</h3>
+      <p>
+        These are the states you encountered this round. Each entry includes a quick political or institutional fact.
+      </p>
+      <ul id="recapList" class="recap-list"></ul>
+    </section>
+  </div>
+
+  <script>
+    // --- Country bank: ~40–50 major countries with flags + political facts ---
+    // Each has: name (canonical), flag, fact, and accepted aliases.
+    const countries = [
+      {
+        name: "Canada",
+        flag: "🇨🇦",
+        fact: "Canada is a federal parliamentary democracy and constitutional monarchy, with the monarch represented domestically by a Governor General.",
+        aliases: ["canada"]
+      },
+      {
+        name: "United States",
+        flag: "🇺🇸",
+        fact: "The United States is a federal presidential republic with a strong separation of powers among the executive, legislative, and judicial branches.",
+        aliases: ["united states","united states of america","usa","u.s.a.","us","u.s.","america"]
+      },
+      {
+        name: "Mexico",
+        flag: "🇲🇽",
+        fact: "Mexico is a federal presidential republic composed of 32 federal entities, including Mexico City.",
+        aliases: ["mexico","méxico"]
+      },
+      {
+        name: "Brazil",
+        flag: "🇧🇷",
+        fact: "Brazil is a federal presidential republic and the largest country in South America by both area and population.",
+        aliases: ["brazil","brasil"]
+      },
+      {
+        name: "Argentina",
+        flag: "🇦🇷",
+        fact: "Argentina is a federal presidential republic with a bicameral National Congress.",
+        aliases: ["argentina"]
+      },
+      {
+        name: "United Kingdom",
+        flag: "🇬🇧",
+        fact: "The United Kingdom is a parliamentary constitutional monarchy with a bicameral Parliament consisting of the House of Commons and House of Lords.",
+        aliases: ["united kingdom","uk","u.k.","great britain","britain","england"]
+      },
+      {
+        name: "France",
+        flag: "🇫🇷",
+        fact: "France is a semi-presidential republic, with a directly elected president and a prime minister accountable to parliament.",
+        aliases: ["france"]
+      },
+      {
+        name: "Germany",
+        flag: "🇩🇪",
+        fact: "Germany is a federal parliamentary republic composed of 16 Länder, each with its own constitution and government.",
+        aliases: ["germany","federal republic of germany"]
+      },
+      {
+        name: "Spain",
+        flag: "🇪🇸",
+        fact: "Spain is a parliamentary constitutional monarchy with 17 autonomous communities and two autonomous cities.",
+        aliases: ["spain","españa","espana"]
+      },
+      {
+        name: "Italy",
+        flag: "🇮🇹",
+        fact: "Italy is a parliamentary republic with a president as head of state and a prime minister as head of government.",
+        aliases: ["italy","italia"]
+      },
+      {
+        name: "Netherlands",
+        flag: "🇳🇱",
+        fact: "The Netherlands is a parliamentary constitutional monarchy known for its consensus-based political culture and coalition governments.",
+        aliases: ["netherlands","the netherlands","holland"]
+      },
+      {
+        name: "Belgium",
+        flag: "🇧🇪",
+        fact: "Belgium is a federal parliamentary constitutional monarchy divided into regions and communities along linguistic lines.",
+        aliases: ["belgium","belgië","belgie"]
+      },
+      {
+        name: "Sweden",
+        flag: "🇸🇪",
+        fact: "Sweden is a constitutional monarchy with a unitary parliamentary system and a robust social welfare state.",
+        aliases: ["sweden"]
+      },
+      {
+        name: "Norway",
+        flag: "🇳🇴",
+        fact: "Norway is a constitutional monarchy with significant sovereign wealth managed through its Government Pension Fund Global.",
+        aliases: ["norway"]
+      },
+      {
+        name: "Switzerland",
+        flag: "🇨🇭",
+        fact: "Switzerland is a federal semi-direct democracy, with frequent referendums and a tradition of political neutrality.",
+        aliases: ["switzerland","swiss"]
+      },
+      {
+        name: "Russia",
+        flag: "🇷🇺",
+        fact: "Russia is a federal semi-presidential republic and a permanent member of the UN Security Council.",
+        aliases: ["russia","russian federation"]
+      },
+      {
+        name: "Ukraine",
+        flag: "🇺🇦",
+        fact: "Ukraine is a unitary semi-presidential republic whose territorial integrity has been at the center of major contemporary security crises.",
+        aliases: ["ukraine"]
+      },
+      {
+        name: "Poland",
+        flag: "🇵🇱",
+        fact: "Poland is a parliamentary republic and a member of the European Union and NATO.",
+        aliases: ["poland"]
+      },
+      {
+        name: "Greece",
+        flag: "🇬🇷",
+        fact: "Greece is a parliamentary republic and a member of the EU and NATO, with a political system shaped by both modern and ancient democratic traditions.",
+        aliases: ["greece","hellas"]
+      },
+      {
+        name: "Turkey",
+        flag: "🇹🇷",
+        fact: "Turkey is officially a presidential republic and a key NATO member straddling Europe and Asia.",
+        aliases: ["turkey","türkiye","turkiye"]
+      },
+      {
+        name: "Saudi Arabia",
+        flag: "🇸🇦",
+        fact: "Saudi Arabia is an absolute monarchy and a pivotal actor in global energy markets and Middle Eastern politics.",
+        aliases: ["saudi arabia","saudi"]
+      },
+      {
+        name: "Israel",
+        flag: "🇮🇱",
+        fact: "Israel is a parliamentary democracy with a unicameral legislature, the Knesset.",
+        aliases: ["israel"]
+      },
+      {
+        name: "Egypt",
+        flag: "🇪🇬",
+        fact: "Egypt is a unitary semi-presidential republic situated at the crossroads of Africa and the Middle East.",
+        aliases: ["egypt"]
+      },
+      {
+        name: "Nigeria",
+        flag: "🇳🇬",
+        fact: "Nigeria is a federal presidential republic and Africa’s most populous country.",
+        aliases: ["nigeria"]
+      },
+      {
+        name: "South Africa",
+        flag: "🇿🇦",
+        fact: "South Africa is a parliamentary republic and a member of BRICS, with a post-apartheid constitution emphasizing rights and reconciliation.",
+        aliases: ["south africa","rsa"]
+      },
+      {
+        name: "Kenya",
+        flag: "🇰🇪",
+        fact: "Kenya is a presidential republic and a major economic and diplomatic hub in East Africa.",
+        aliases: ["kenya"]
+      },
+      {
+        name: "China",
+        flag: "🇨🇳",
+        fact: "China is a one-party socialist state led by the Chinese Communist Party, with a rapidly expanding global economic footprint.",
+        aliases: ["china","people's republic of china","prc"]
+      },
+      {
+        name: "Japan",
+        flag: "🇯🇵",
+        fact: "Japan is a constitutional monarchy with a ceremonial emperor and an elected legislature called the National Diet.",
+        aliases: ["japan"]
+      },
+      {
+        name: "South Korea",
+        flag: "🇰🇷",
+        fact: "South Korea is a presidential republic and a key U.S. ally in East Asia, known for rapid development and democratic consolidation.",
+        aliases: ["south korea","republic of korea","korea"]
+      },
+      {
+        name: "India",
+        flag: "🇮🇳",
+        fact: "India is the world’s largest democracy and a federal parliamentary republic with a president and a prime minister.",
+        aliases: ["india","republic of india"]
+      },
+      {
+        name: "Pakistan",
+        flag: "🇵🇰",
+        fact: "Pakistan is a federal parliamentary republic and a nuclear-armed state in South Asia.",
+        aliases: ["pakistan","islamic republic of pakistan"]
+      },
+      {
+        name: "Bangladesh",
+        flag: "🇧🇩",
+        fact: "Bangladesh is a unitary parliamentary republic that has experienced rapid economic growth in recent decades.",
+        aliases: ["bangladesh"]
+      },
+      {
+        name: "Indonesia",
+        flag: "🇮🇩",
+        fact: "Indonesia is the world’s largest archipelagic state and a presidential republic with significant regional devolution.",
+        aliases: ["indonesia","republic of indonesia"]
+      },
+      {
+        name: "Vietnam",
+        flag: "🇻🇳",
+        fact: "Vietnam is a one-party socialist republic led by the Communist Party of Vietnam, with a socialist-oriented market economy.",
+        aliases: ["vietnam","viet nam"]
+      },
+      {
+        name: "Thailand",
+        flag: "🇹🇭",
+        fact: "Thailand is a constitutional monarchy with a history of frequent coups and significant military influence in politics.",
+        aliases: ["thailand"]
+      },
+      {
+        name: "Australia",
+        flag: "🇦🇺",
+        fact: "Australia is a federal parliamentary constitutional monarchy and a key actor in Indo-Pacific security.",
+        aliases: ["australia"]
+      },
+      {
+        name: "New Zealand",
+        flag: "🇳🇿",
+        fact: "New Zealand is a parliamentary democracy and constitutional monarchy with a strong emphasis on indigenous Māori rights.",
+        aliases: ["new zealand","nz","aotearoa"]
+      },
+      {
+        name: "Colombia",
+        flag: "🇨🇴",
+        fact: "Colombia is a presidential republic that has undergone significant peace processes with insurgent groups in recent years.",
+        aliases: ["colombia"]
+      },
+      {
+        name: "Chile",
+        flag: "🇨🇱",
+        fact: "Chile is a presidential republic in South America that has recently undertaken efforts to rewrite its constitution.",
+        aliases: ["chile"]
+      },
+      {
+        name: "Morocco",
+        flag: "🇲🇦",
+        fact: "Morocco is a constitutional monarchy with significant executive authority retained by the king.",
+        aliases: ["morocco","kingdom of morocco"]
+      },
+      {
+        name: "Algeria",
+        flag: "🇩🇿",
+        fact: "Algeria is a presidential republic and one of Africa’s largest states by area, with a history shaped by anti-colonial struggle.",
+        aliases: ["algeria"]
+      }
+    ];
+
+    // --- Helper functions ---
+    function shuffleArray(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function normalizeInput(str) {
+      return str
+        .toLowerCase()
+        .replace(/\./g, "")   // remove periods
+        .replace(/,/g, "")    // remove commas
+        .trim();
+    }
+
+    // --- DOM references ---
+    const flagEmojiEl = document.getElementById("flagEmoji");
+    const flagCaptionEl = document.getElementById("flagCaption");
+    const scoreDisplay = document.getElementById("scoreDisplay");
+    const questionDisplay = document.getElementById("questionDisplay");
+    const streakDisplay = document.getElementById("streakDisplay");
+    const timerDisplay = document.getElementById("timerDisplay");
+
+    const guessForm = document.getElementById("guessForm");
+    const guessInput = document.getElementById("guessInput");
+    const submitBtn = document.getElementById("submitBtn");
+    const startBtn = document.getElementById("startBtn");
+    const feedbackMessage = document.getElementById("feedbackMessage");
+    const gameOverMessage = document.getElementById("gameOverMessage");
+    const recapCard = document.getElementById("recapCard");
+    const recapList = document.getElementById("recapList");
+
+    // --- Game state ---
+    let currentCountry = null;
+    let score = 0;
+    let questions = 0;
+    let streak = 0;
+    let timeLeft = 60;
+    let timerInterval = null;
+    let gameActive = false;
+    let encounteredCountries = []; // store unique country objects per round
+
+    // --- Core functions ---
+    function updateStats() {
+      scoreDisplay.textContent = `Score: ${score}`;
+      questionDisplay.textContent = `Questions: ${questions}`;
+      streakDisplay.textContent = `Streak: ${streak}`;
+      timerDisplay.textContent = `Time: ${timeLeft}s`;
+    }
+
+    function pickNewCountry() {
+      if (!gameActive) return;
+      const shuffled = shuffleArray(countries);
+      currentCountry = shuffled[0];
+      questions++;
+      updateStats();
+      flagEmojiEl.textContent = currentCountry.flag;
+      flagCaptionEl.textContent = "Type the name of the state represented by this flag, then press Submit or Enter.";
+      feedbackMessage.textContent = "";
+      feedbackMessage.className = "message";
+      guessInput.value = "";
+      guessInput.focus();
+
+      // Track this country in the encountered list (unique)
+      if (!encounteredCountries.some(c => c.name === currentCountry.name)) {
+        encounteredCountries.push(currentCountry);
+      }
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        if (timeLeft < 0) timeLeft = 0;
+        timerDisplay.textContent = `Time: ${timeLeft}s`;
+        if (timeLeft <= 0) {
+          endGame();
+        }
+      }, 1000);
+    }
+
+    function startGame() {
+      score = 0;
+      questions = 0;
+      streak = 0;
+      timeLeft = 60;
+      gameActive = true;
+      encounteredCountries = [];
+
+      recapCard.style.display = "none";
+      recapList.innerHTML = "";
+      gameOverMessage.style.display = "none";
+      feedbackMessage.textContent = "";
+      feedbackMessage.className = "message";
+      guessInput.disabled = false;
+      submitBtn.disabled = false;
+
+      updateStats();
+      startTimer();
+      pickNewCountry();
+    }
+
+    function endGame() {
+      gameActive = false;
+      clearInterval(timerInterval);
+      guessInput.disabled = true;
+      submitBtn.disabled = true;
+      flagCaptionEl.textContent = "Time is up.";
+      feedbackMessage.textContent = "";
+      feedbackMessage.className = "message";
+      gameOverMessage.style.display = "block";
+      gameOverMessage.textContent =
+        `Time's up! You answered ${score} correctly out of ${questions} attempts.`;
+
+      // Build recap
+      buildRecap();
+    }
+
+    function buildRecap() {
+      recapList.innerHTML = "";
+      if (encounteredCountries.length === 0) {
+        recapList.innerHTML = "<li>No countries encountered this round.</li>";
+      } else {
+        encounteredCountries.forEach(country => {
+          const li = document.createElement("li");
+          li.innerHTML = `<strong>${country.name}</strong>: ${country.fact}`;
+          recapList.appendChild(li);
+        });
+      }
+      recapCard.style.display = "block";
+    }
+
+    function handleGuessSubmit(event) {
+      event.preventDefault();
+      if (!gameActive || timeLeft <= 0 || !currentCountry) return;
+
+      const raw = guessInput.value;
+      if (!raw.trim()) {
+        return;
+      }
+
+      const normalized = normalizeInput(raw);
+      const aliases = currentCountry.aliases.map(a => normalizeInput(a));
+
+      if (aliases.includes(normalized)) {
+        // Correct
+        score++;
+        streak++;
+        feedbackMessage.textContent = `Correct — it was ${currentCountry.name}.`;
+        feedbackMessage.className = "message correct";
+      } else {
+        // Incorrect
+        streak = 0;
+        feedbackMessage.textContent = `Not quite — that flag belongs to ${currentCountry.name}.`;
+        feedbackMessage.className = "message wrong";
+      }
+
+      updateStats();
+
+      // Immediately move to the next flag if time remains
+      if (timeLeft > 0) {
+        pickNewCountry();
+      } else {
+        endGame();
+      }
+    }
+
+    // --- Event listeners ---
+    guessForm.addEventListener("submit", handleGuessSubmit);
+
+    startBtn.addEventListener("click", () => {
+      startGame();
+    });
+
+    // Initial UI
+    updateStats();
+    guessInput.disabled = true;
+    submitBtn.disabled = true;
+  </script>
+</body>
+</html>
